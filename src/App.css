@@ -1,0 +1,7 @@
+#root {
+  max-width: 1500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+._nav { border-bottom: 1px solid #40ffff; z-index: 1000; background-color: #FFF;}
