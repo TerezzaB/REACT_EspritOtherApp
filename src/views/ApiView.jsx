@@ -35,12 +35,12 @@ export default function ApiView() {
 
     return (
         <>
-            <div style={{ margin: '20px' }}>
+            <div style={{ margin: '3em 0 2em 0' }}>
                 <AutocompleteComponent
                     options={serialNumbers}
                     onChange={(event, value) => setSelectedSerialNumber(value)}
                 />
-                <div style={{ margin: '20px' }}>
+                <div style={{ marginTop: '3em' }}>
                     {selectedSerialNumber && <DataTable data={data} />}
                 </div>
 
