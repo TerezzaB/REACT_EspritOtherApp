@@ -2,6 +2,15 @@ import React, { useEffect, useState } from 'react';
 import DataTable from '../components/DataTable';
 import AutocompleteComponent from '../components/Autocomplete';
 
+// Utility function to format date as DD.MM.RRRR
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+}
+
 export default function ApiView() {
     const [data, setData] = useState([]);
     const [serialNumbers, setSerialNumbers] = useState([]);
@@ -25,7 +34,13 @@ export default function ApiView() {
             fetch(`https://muses.esprit-bs.sk/viewerapi/flopres/getSensorData/${selectedSerialNumber}`)
                 .then((response) => response.json())
                 .then((data) => {
-                    setData(data);
+                    // Format date fields in the fetched data
+                    const formattedData = data.map((item) => ({
+                        ...item,
+                        time: formatDate(item.time), 
+                        writetime: formatDate(item.writetime),
+                    }));
+                    setData(formattedData);
                 })
                 .catch((error) => {
                     console.error('Error fetching data:', error);
@@ -43,7 +58,6 @@ export default function ApiView() {
                 <div style={{ marginTop: '3em' }}>
                     {selectedSerialNumber && <DataTable data={data} />}
                 </div>
-
             </div>
         </>
     );
